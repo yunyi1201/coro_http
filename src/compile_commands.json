@@ -1,0 +1,142 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-I./include",
+      "-O2",
+      "-g",
+      "-std=gnu11",
+      "-g",
+      "-ggdb",
+      "-Wall",
+      "-W",
+      "-c",
+      "-o",
+      "build/./src/coro/co.o",
+      "/home/yunyi/code/practice/coro_http/src/coro/co.c"
+    ],
+    "directory": "/home/yunyi/code/practice/coro_http",
+    "file": "/home/yunyi/code/practice/coro_http/src/coro/co.c",
+    "output": "/home/yunyi/code/practice/coro_http/build/src/coro/co.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-I./include",
+      "-O2",
+      "-g",
+      "-std=gnu11",
+      "-g",
+      "-ggdb",
+      "-Wall",
+      "-W",
+      "-c",
+      "-o",
+      "build/./src/coro/switch.o",
+      "/home/yunyi/code/practice/coro_http/src/coro/switch.c"
+    ],
+    "directory": "/home/yunyi/code/practice/coro_http",
+    "file": "/home/yunyi/code/practice/coro_http/src/coro/switch.c",
+    "output": "/home/yunyi/code/practice/coro_http/build/src/coro/switch.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-I./include",
+      "-O2",
+      "-g",
+      "-std=gnu11",
+      "-g",
+      "-ggdb",
+      "-Wall",
+      "-W",
+      "-c",
+      "-o",
+      "build/./src/main.o",
+      "/home/yunyi/code/practice/coro_http/src/main.c"
+    ],
+    "directory": "/home/yunyi/code/practice/coro_http",
+    "file": "/home/yunyi/code/practice/coro_http/src/main.c",
+    "output": "/home/yunyi/code/practice/coro_http/build/src/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-I./include",
+      "-O2",
+      "-g",
+      "-std=gnu11",
+      "-g",
+      "-ggdb",
+      "-Wall",
+      "-W",
+      "-c",
+      "-o",
+      "build/./src/process/event.o",
+      "/home/yunyi/code/practice/coro_http/src/process/event.c"
+    ],
+    "directory": "/home/yunyi/code/practice/coro_http",
+    "file": "/home/yunyi/code/practice/coro_http/src/process/event.c",
+    "output": "/home/yunyi/code/practice/coro_http/build/src/process/event.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-I./include",
+      "-O2",
+      "-g",
+      "-std=gnu11",
+      "-g",
+      "-ggdb",
+      "-Wall",
+      "-W",
+      "-c",
+      "-o",
+      "build/./src/util/memcache.o",
+      "/home/yunyi/code/practice/coro_http/src/util/memcache.c"
+    ],
+    "directory": "/home/yunyi/code/practice/coro_http",
+    "file": "/home/yunyi/code/practice/coro_http/src/util/memcache.c",
+    "output": "/home/yunyi/code/practice/coro_http/build/src/util/memcache.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-I./include",
+      "-O2",
+      "-g",
+      "-std=gnu11",
+      "-g",
+      "-ggdb",
+      "-Wall",
+      "-W",
+      "-c",
+      "-o",
+      "build/./src/util/rbtree.o",
+      "/home/yunyi/code/practice/coro_http/src/util/rbtree.c"
+    ],
+    "directory": "/home/yunyi/code/practice/coro_http",
+    "file": "/home/yunyi/code/practice/coro_http/src/util/rbtree.c",
+    "output": "/home/yunyi/code/practice/coro_http/build/src/util/rbtree.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-I./include",
+      "-O2",
+      "-g",
+      "-std=gnu11",
+      "-g",
+      "-ggdb",
+      "-Wall",
+      "-W",
+      "-c",
+      "-o",
+      "build/./src/util/util.o",
+      "/home/yunyi/code/practice/coro_http/src/util/util.c"
+    ],
+    "directory": "/home/yunyi/code/practice/coro_http",
+    "file": "/home/yunyi/code/practice/coro_http/src/util/util.c",
+    "output": "/home/yunyi/code/practice/coro_http/build/src/util/util.o"
+  }
+]

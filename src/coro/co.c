@@ -202,6 +202,7 @@ static struct coroutine *create_coroutine() {
   return coro;
 }
 
+/* get a coroutine from idle or create an new coroutine */
 static struct coroutine *get_coroutine() {
   struct coroutine *coro;
 
