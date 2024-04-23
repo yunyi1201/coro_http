@@ -1,16 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "env.h"
 #include "process.h"
 #include "sched.h"
 #include "str.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 static void usage(const char *prog) {
-  printf("Usage: %s [command]\n"
-         "command options:\n"
-         "  conf  : check and show config file content\n"
-         "  start : start the web server\n",
-         prog);
+  printf(
+      "Usage: %s [command]\n"
+      "command options:\n"
+      "  conf  : check and show config file content\n"
+      "  start : start the web server\n",
+      prog);
 }
 
 int main(int argc, char *argv[]) {

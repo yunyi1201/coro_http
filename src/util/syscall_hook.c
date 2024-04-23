@@ -1,4 +1,6 @@
 #define _GNU_SOURCE
+#include "syscall_hook.h"
+
 #include <dlfcn.h>
 #include <errno.h>
 #include <sys/socket.h>
@@ -6,11 +8,9 @@
 #include <unistd.h>
 
 #include "common.h"
-
 #include "event.h"
 #include "net.h"
 #include "sched.h"
-#include "syscall_hook.h"
 
 #define HOOK_SYSCALL(name) real_sys_##name = (sys_##name)dlsym(RTLD_NEXT, #name)
 
@@ -47,8 +47,7 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
   if (0 == ret) /* successful */
     return 0;
 
-  if (ret < 0 && errno != EINPROGRESS)
-    return -1;
+  if (ret < 0 && errno != EINPROGRESS) return -1;
 
   if (add_fd_event(sockfd, EVENT_WRITABLE, event_conn_callback, current_coro()))
     return -2;
@@ -64,8 +63,7 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
   socklen_t len;
   ret = getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &flags, &len);
   if (ret == -1 || flags || !len) {
-    if (flags)
-      errno = flags;
+    if (flags) errno = flags;
 
     return -4;
   }
@@ -77,11 +75,9 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen) {
   int connfd = 0;
 
   while ((connfd = real_sys_accept(sockfd, addr, addrlen)) < 0) {
-    if (EINTR == errno)
-      continue;
+    if (EINTR == errno) continue;
 
-    if (!fd_not_ready())
-      return -1;
+    if (!fd_not_ready()) return -1;
 
     if (add_fd_event(sockfd, EVENT_READABLE, event_conn_callback,
                      current_coro()))
@@ -117,11 +113,9 @@ ssize_t read(int fd, void *buf, size_t count) {
   ssize_t n;
 
   while ((n = real_sys_read(fd, buf, count)) < 0) {
-    if (EINTR == errno)
-      continue;
+    if (EINTR == errno) continue;
 
-    if (!fd_not_ready())
-      return -1;
+    if (!fd_not_ready()) return -1;
 
     if (add_fd_event(fd, EVENT_READABLE, event_rw_callback, current_coro()))
       return -2;
@@ -141,11 +135,9 @@ ssize_t recv(int sockfd, void *buf, size_t len, int flags) {
   ssize_t n;
 
   while ((n = real_sys_recv(sockfd, buf, len, flags)) < 0) {
-    if (EINTR == errno)
-      continue;
+    if (EINTR == errno) continue;
 
-    if (!fd_not_ready())
-      return -1;
+    if (!fd_not_ready()) return -1;
 
     if (add_fd_event(sockfd, EVENT_READABLE, event_rw_callback, current_coro()))
       return -2;
@@ -165,11 +157,9 @@ ssize_t write(int fd, const void *buf, size_t count) {
   ssize_t n;
 
   while ((n = real_sys_write(fd, buf, count)) < 0) {
-    if (EINTR == errno)
-      continue;
+    if (EINTR == errno) continue;
 
-    if (!fd_not_ready())
-      return -1;
+    if (!fd_not_ready()) return -1;
 
     if (add_fd_event(fd, EVENT_WRITABLE, event_rw_callback, current_coro()))
       return -2;
@@ -189,11 +179,9 @@ ssize_t send(int sockfd, const void *buf, size_t len, int flags) {
   ssize_t n;
 
   while ((n = real_sys_send(sockfd, buf, len, flags)) < 0) {
-    if (EINTR == errno)
-      continue;
+    if (EINTR == errno) continue;
 
-    if (!fd_not_ready())
-      return -1;
+    if (!fd_not_ready()) return -1;
 
     if (add_fd_event(sockfd, EVENT_WRITABLE, event_rw_callback, current_coro()))
       return -2;

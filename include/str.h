@@ -11,9 +11,9 @@ typedef struct {
   size_t len;
 } str_t;
 
-#define STRING(str)                                                            \
+#define STRING(str) \
   { (unsigned char *)str, sizeof(str) - 1 }
-#define NULL_STRING                                                            \
+#define NULL_STRING \
   { NULL, 0 }
 
 static inline void str_init(str_t *str) {
@@ -30,11 +30,11 @@ static inline int str_atoi(str_t *s) {
 
   for (size_t i = 0; i < s->len; i++) {
     switch (s->p[i]) {
-    case '0' ... '9':
-      val = 10 * val + (s->p[i] - '0');
-      break;
-    default:
-      return val;
+      case '0' ... '9':
+        val = 10 * val + (s->p[i] - '0');
+        break;
+      default:
+        return val;
     }
   }
 

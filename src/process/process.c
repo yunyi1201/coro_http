@@ -1,17 +1,18 @@
 #include "process.h"
+
+#include <errno.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
+
 #include "common.h"
 #include "env.h"
 #include "event.h"
 #include "net.h"
 #include "sched.h"
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
-#include <errno.h>
-#include <sys/socket.h>
 static int listen_fd;
 
 static inline void request_default_handler(int fd __UNUSED) {}
@@ -68,8 +69,7 @@ void tcp_server_init() {
 static inline void increase_conn() { connection_count++; }
 
 static inline void decrease_conn_and_check() {
-  if (--connection_count == 0)
-    exit(0);
+  if (--connection_count == 0) exit(0);
 }
 
 static void handle_connection(void *args) {
@@ -115,13 +115,11 @@ static void worker_accept_cycle(void *args __UNUSED) {
 
 void register_service(worker_init_proc_t worker_proc,
                       request_handler_t handler) {
-
   worker_init_proc = worker_proc;
   request_handler = handler;
 }
 
 void worker_process_cycle() {
-
   if (worker_init_proc()) {
     printf("Failed to initiate worker process");
     exit(0);

@@ -1,10 +1,10 @@
+#include "event.h"
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/epoll.h>
-
-#include "event.h"
 
 struct fd_event {
   int mask;
@@ -32,13 +32,10 @@ int add_fd_event(int fd, event_t what, event_proc_t proc, void *args) {
   struct epoll_event ev = {.events = 0, .data.fd = fd};
   int mask = what | fe->mask; /* merge old event */
 
-  if (mask & EVENT_READABLE)
-    ev.events |= EPOLLIN;
-  if (mask & EVENT_WRITABLE)
-    ev.events |= EPOLLOUT;
+  if (mask & EVENT_READABLE) ev.events |= EPOLLIN;
+  if (mask & EVENT_WRITABLE) ev.events |= EPOLLOUT;
 
-  if (-1 == epoll_ctl(evloop.epoll_fd, op, fd, &ev))
-    return -2;
+  if (-1 == epoll_ctl(evloop.epoll_fd, op, fd, &ev)) return -2;
 
   fe->mask |= what;
   fe->proc = proc;
@@ -48,21 +45,17 @@ int add_fd_event(int fd, event_t what, event_proc_t proc, void *args) {
 }
 
 void del_fd_event(int fd, event_t what) {
-  if (fd >= evloop.max_conn)
-    return;
+  if (fd >= evloop.max_conn) return;
 
   struct fd_event *fe = &evloop.array[fd];
-  if (EVNET_NONE == fe->mask)
-    return;
+  if (EVNET_NONE == fe->mask) return;
 
   fe->mask &= ~(what);
   int mask = fe->mask;
   struct epoll_event ev = {.events = 0, .data.fd = fd};
 
-  if (mask & EVENT_READABLE)
-    ev.events |= EPOLLIN;
-  if (mask & EVENT_WRITABLE)
-    ev.events |= EPOLLOUT;
+  if (mask & EVENT_READABLE) ev.events |= EPOLLIN;
+  if (mask & EVENT_WRITABLE) ev.events |= EPOLLOUT;
 
   epoll_ctl(evloop.epoll_fd,
             (mask == EVNET_NONE) ? EPOLL_CTL_DEL : EPOLL_CTL_MOD, fd, &ev);
@@ -70,8 +63,7 @@ void del_fd_event(int fd, event_t what) {
 
 void event_cycle(int ms /* in milliseconds */) {
   int value = epoll_wait(evloop.epoll_fd, evloop.ev, evloop.max_conn, ms);
-  if (value <= 0)
-    return;
+  if (value <= 0) return;
 
   for (int i = 0; i < value; i++) {
     struct epoll_event *ev = &evloop.ev[i];

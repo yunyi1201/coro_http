@@ -1,7 +1,8 @@
 #pragma once
 
-#include "common.h"
 #include <stddef.h>
+
+#include "common.h"
 
 struct coro_stack {
   void *ptr;

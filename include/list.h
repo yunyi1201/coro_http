@@ -26,13 +26,13 @@ extern "C" {
  */
 #ifndef container_of
 #ifdef __LIST_HAVE_TYPEOF
-#define container_of(ptr, type, member)                                        \
-  __extension__({                                                              \
-    const __typeof__(((type *)0)->member) *__pmember = (ptr);                  \
-    (type *)((char *)__pmember - offsetof(type, member));                      \
+#define container_of(ptr, type, member)                       \
+  __extension__({                                             \
+    const __typeof__(((type *)0)->member) *__pmember = (ptr); \
+    (type *)((char *)__pmember - offsetof(type, member));     \
   })
 #else
-#define container_of(ptr, type, member)                                        \
+#define container_of(ptr, type, member) \
   ((type *)((char *)(ptr)-offsetof(type, member)))
 #endif
 #endif
@@ -190,8 +190,7 @@ static inline void list_splice(struct list_head *list, struct list_head *head) {
   struct list_head *list_first = list->next;
   struct list_head *list_last = list->prev;
 
-  if (list_empty(list))
-    return;
+  if (list_empty(list)) return;
 
   head->next = list_first;
   list_first->prev = head;
@@ -216,8 +215,7 @@ static inline void list_splice_tail(struct list_head *list,
   struct list_head *list_first = list->next;
   struct list_head *list_last = list->prev;
 
-  if (list_empty(list))
-    return;
+  if (list_empty(list)) return;
 
   head->prev = list_last;
   list_last->next = head;
@@ -279,8 +277,7 @@ static inline void list_cut_position(struct list_head *head_to,
                                      struct list_head *node) {
   struct list_head *head_from_first = head_from->next;
 
-  if (list_empty(head_from))
-    return;
+  if (list_empty(head_from)) return;
 
   if (head_from == node) {
     INIT_LIST_HEAD(head_to);
@@ -340,7 +337,7 @@ static inline void list_move_tail(struct list_head *node,
  *
  * Return: @type pointer of first entry in list
  */
-#define list_first_entry(head, type, member)                                   \
+#define list_first_entry(head, type, member) \
   list_entry((head)->next, type, member)
 
 /**
@@ -351,7 +348,7 @@ static inline void list_move_tail(struct list_head *node,
  *
  * Return: @type pointer of last entry in list
  */
-#define list_last_entry(head, type, member)                                    \
+#define list_last_entry(head, type, member) \
   list_entry((head)->prev, type, member)
 
 /**
@@ -363,7 +360,7 @@ static inline void list_move_tail(struct list_head *node,
  * iterating through it. Any modifications to the the list will cause undefined
  * behavior.
  */
-#define list_for_each(node, head)                                              \
+#define list_for_each(node, head) \
   for (node = (head)->next; node != (head); node = node->next)
 
 /**
@@ -379,9 +376,9 @@ static inline void list_move_tail(struct list_head *node,
  * FIXME: remove dependency of __typeof__ extension
  */
 #ifdef __LIST_HAVE_TYPEOF
-#define list_for_each_entry(entry, head, member)                               \
-  for (entry = list_entry((head)->next, __typeof__(*entry), member);           \
-       &entry->member != (head);                                               \
+#define list_for_each_entry(entry, head, member)                     \
+  for (entry = list_entry((head)->next, __typeof__(*entry), member); \
+       &entry->member != (head);                                     \
        entry = list_entry(entry->member.next, __typeof__(*entry), member))
 #endif
 
@@ -394,8 +391,8 @@ static inline void list_move_tail(struct list_head *node,
  * The current node (iterator) is allowed to be removed from the list. Any
  * other modifications to the the list will cause undefined behavior.
  */
-#define list_for_each_safe(node, safe, head)                                   \
-  for (node = (head)->next, safe = node->next; node != (head);                 \
+#define list_for_each_safe(node, safe, head)                   \
+  for (node = (head)->next, safe = node->next; node != (head); \
        node = safe, safe = node->next)
 
 /**
@@ -410,10 +407,10 @@ static inline void list_move_tail(struct list_head *node,
  *
  * FIXME: remove dependency of __typeof__ extension
  */
-#define list_for_each_entry_safe(entry, safe, head, member)                    \
-  for (entry = list_entry((head)->next, __typeof__(*entry), member),           \
-      safe = list_entry(entry->member.next, __typeof__(*entry), member);       \
-       &entry->member != (head); entry = safe,                                 \
+#define list_for_each_entry_safe(entry, safe, head, member)              \
+  for (entry = list_entry((head)->next, __typeof__(*entry), member),     \
+      safe = list_entry(entry->member.next, __typeof__(*entry), member); \
+       &entry->member != (head); entry = safe,                           \
       safe = list_entry(safe->member.next, __typeof__(*entry), member))
 
 #undef __LIST_HAVE_TYPEOF

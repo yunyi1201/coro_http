@@ -1,7 +1,8 @@
 #pragma once
 
-#include "common.h"
 #include <stddef.h>
+
+#include "common.h"
 
 struct rb_node {
   unsigned long rb_parent_color;
@@ -18,13 +19,13 @@ struct rb_root {
 #define rb_color(r) ((r)->rb_parent_color & 1)
 #define rb_is_red(r) (!rb_color(r))
 #define rb_is_black(r) rb_color(r)
-#define rb_set_red(r)                                                          \
-  do {                                                                         \
-    (r)->rb_parent_color &= ~1;                                                \
+#define rb_set_red(r)           \
+  do {                          \
+    (r)->rb_parent_color &= ~1; \
   } while (0)
-#define rb_set_black(r)                                                        \
-  do {                                                                         \
-    (r)->rb_parent_color |= 1;                                                 \
+#define rb_set_black(r)        \
+  do {                         \
+    (r)->rb_parent_color |= 1; \
   } while (0)
 
 static inline void rb_set_parent(struct rb_node *rb, struct rb_node *p) {
@@ -35,7 +36,7 @@ static inline void rb_set_color(struct rb_node *rb, int color) {
   rb->rb_parent_color = (rb->rb_parent_color & ~1) | color;
 }
 
-#define RB_ROOT                                                                \
+#define RB_ROOT \
   (struct rb_root) { NULL, }
 
 #define RB_EMPTY_ROOT(root) ((root)->rb_node == NULL)

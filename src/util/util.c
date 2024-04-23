@@ -1,6 +1,6 @@
-#include <time.h>
-
 #include "util.h"
+
+#include <time.h>
 
 struct tm *get_tm() {
   time_t t;

@@ -8,14 +8,11 @@
 
 static inline int set_nonblock(int fd) {
   int flags = fcntl(fd, F_GETFL, 0);
-  if (flags < 0)
-    return -1;
+  if (flags < 0) return -1;
 
-  if (flags & O_NONBLOCK)
-    return 0;
+  if (flags & O_NONBLOCK) return 0;
 
-  if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) < 0)
-    return -1;
+  if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) < 0) return -1;
 
   return 0;
 }
@@ -35,8 +32,7 @@ static inline int set_keep_alive(int fd, int interval) {
     return -1;
 
   val = interval / 3;
-  if (val == 0)
-    val = 1;
+  if (val == 0) val = 1;
 
   if (setsockopt(fd, IPPROTO_TCP, TCP_KEEPINTVL, &val, sizeof(val)) < 0)
     return -1;
@@ -72,12 +68,10 @@ static inline char *get_peer_ip(int fd) {
 }
 
 static inline unsigned ip_to_nl(const char *ip) {
-  if (!ip)
-    return htonl(INADDR_ANY);
+  if (!ip) return htonl(INADDR_ANY);
 
   struct in_addr s;
-  if (1 != inet_pton(AF_INET, ip, &s))
-    return htonl(INADDR_ANY);
+  if (1 != inet_pton(AF_INET, ip, &s)) return htonl(INADDR_ANY);
 
   return s.s_addr;
 }

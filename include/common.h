@@ -2,13 +2,13 @@
 #include <assert.h>
 
 /* debug */
-#define Assert(cond, format, ...)                                              \
-  do {                                                                         \
-    if (!(cond)) {                                                             \
-      fprintf(stderr, "[%s:%d %s]" format "\n", __FILE__, __LINE__, __func__,  \
-              ##__VA_ARGS__);                                                  \
-      assert(cond);                                                            \
-    }                                                                          \
+#define Assert(cond, format, ...)                                             \
+  do {                                                                        \
+    if (!(cond)) {                                                            \
+      fprintf(stderr, "[%s:%d %s]" format "\n", __FILE__, __LINE__, __func__, \
+              ##__VA_ARGS__);                                                 \
+      assert(cond);                                                           \
+    }                                                                         \
   } while (0)
 
 #define panic(format, ...) Assert(0, format, ##__VA_ARGS__)
@@ -45,8 +45,8 @@
 #if __has_attribute(__fallthrough__)
 #define fallthrough __attribute__((__fallthrough__))
 #else
-#define fallthrough                                                            \
-  do {                                                                         \
+#define fallthrough \
+  do {              \
   } while (0) /* fallthrough */
 #endif
 

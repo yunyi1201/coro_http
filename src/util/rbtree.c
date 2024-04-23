@@ -1,12 +1,11 @@
-#include <stddef.h>
-
 #include "rbtree.h"
+
+#include <stddef.h>
 
 static void __rb_rotate_left(struct rb_node *node, struct rb_root *root) {
   struct rb_node *right = node->rb_right, *parent = rb_parent(node);
 
-  if ((node->rb_right = right->rb_left))
-    rb_set_parent(right->rb_left, node);
+  if ((node->rb_right = right->rb_left)) rb_set_parent(right->rb_left, node);
 
   right->rb_left = node;
 
@@ -26,8 +25,7 @@ static void __rb_rotate_left(struct rb_node *node, struct rb_root *root) {
 static void __rb_rotate_right(struct rb_node *node, struct rb_root *root) {
   struct rb_node *left = node->rb_left, *parent = rb_parent(node);
 
-  if ((node->rb_left = left->rb_right))
-    rb_set_parent(left->rb_right, node);
+  if ((node->rb_left = left->rb_right)) rb_set_parent(left->rb_right, node);
 
   left->rb_right = node;
 
@@ -158,8 +156,7 @@ static void __rb_erase_color(struct rb_node *node, struct rb_node *parent,
     }
   }
 
-  if (node)
-    rb_set_black(node);
+  if (node) rb_set_black(node);
 }
 
 void rb_erase(struct rb_node *node, struct rb_root *root) {
@@ -174,8 +171,7 @@ void rb_erase(struct rb_node *node, struct rb_root *root) {
     struct rb_node *old = node, *left;
 
     node = node->rb_right;
-    while ((left = node->rb_left))
-      node = left;
+    while ((left = node->rb_left)) node = left;
 
     if (rb_parent(old)) {
       if (rb_parent(old)->rb_left == old)
@@ -192,8 +188,7 @@ void rb_erase(struct rb_node *node, struct rb_root *root) {
     if (parent == old)
       parent = node;
     else {
-      if (child)
-        rb_set_parent(child, parent);
+      if (child) rb_set_parent(child, parent);
       parent->rb_left = child;
 
       node->rb_right = old->rb_right;
@@ -210,8 +205,7 @@ void rb_erase(struct rb_node *node, struct rb_root *root) {
   parent = rb_parent(node);
   color = rb_color(node);
 
-  if (child)
-    rb_set_parent(child, parent);
+  if (child) rb_set_parent(child, parent);
 
   if (parent) {
     if (parent->rb_left == node)
@@ -222,18 +216,15 @@ void rb_erase(struct rb_node *node, struct rb_root *root) {
     root->rb_node = child;
 
 out:
-  if (color == RB_BLACK)
-    __rb_erase_color(child, parent, root);
+  if (color == RB_BLACK) __rb_erase_color(child, parent, root);
 }
 
 /* returns the first node (in sort order) of the tree. */
 struct rb_node *rb_first(const struct rb_root *root) {
   struct rb_node *n = root->rb_node;
-  if (!n)
-    return NULL;
+  if (!n) return NULL;
 
-  while (n->rb_left)
-    n = n->rb_left;
+  while (n->rb_left) n = n->rb_left;
 
   return n;
 }

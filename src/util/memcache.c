@@ -1,7 +1,7 @@
+#include "memcache.h"
+
 #include <assert.h>
 #include <stdlib.h>
-
-#include "memcache.h"
 
 static inline void add_element(struct memcache *cache, void *element) {
   if (cache->curr < cache->cache_size) {
@@ -30,8 +30,7 @@ struct memcache *memcache_create(size_t obj_size, int max_cache_size) {
 
   size_t size = sizeof(struct memcache) + max_cache_size * sizeof(void *);
   struct memcache *cache = malloc(size);
-  if (!cache)
-    return NULL;
+  if (!cache) return NULL;
 
   cache->elements = (void **)((char *)cache + sizeof(struct memcache));
   cache->obj_size = obj_size, cache->cache_size = max_cache_size;

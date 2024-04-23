@@ -24,7 +24,7 @@ static str_t http_status_lines[] = {
     NULL_STRING, /* "306 unused" */
     STRING("307 Temporary Redirect"),
 #define HTTP_STATUS_LAST_3XX 308
-#define HTTP_STATUS_OFFSET_4XX                                                 \
+#define HTTP_STATUS_OFFSET_4XX \
   (HTTP_STATUS_LAST_3XX - 301 + HTTP_STATUS_OFFSET_3XX)
     STRING("400 Bad Request"),
     STRING("401 Unauthorized"),
@@ -44,7 +44,7 @@ static str_t http_status_lines[] = {
     STRING("415 Unsupported Media Type"),
     STRING("416 Requested Range Not Satisfiable"),
 #define HTTP_STATUS_LAST_4XX 417
-#define HTTP_STATUS_OFFSET_5XX                                                 \
+#define HTTP_STATUS_OFFSET_5XX \
   (HTTP_STATUS_LAST_4XX - 400 + HTTP_STATUS_OFFSET_4XX)
     STRING("500 Internal Server Error"),
     STRING("501 Not Implemented"),
@@ -185,7 +185,8 @@ static char http_error_496_page[] =
     "<center>No required SSL certificate was sent</center>" CRLF;
 
 static char http_error_497_page[] =
-    "<html>" CRLF "<head><title>400 The plain HTTP request was sent to HTTPS "
+    "<html>" CRLF
+    "<head><title>400 The plain HTTP request was sent to HTTPS "
     "port</title></head>" CRLF "<body bgcolor=\"white\">" CRLF
     "<center><h1>400 Bad Request</h1></center>" CRLF
     "<center>The plain HTTP request was sent to HTTPS port</center>" CRLF;
@@ -249,7 +250,7 @@ static str_t http_error_pages[] = {
     STRING(http_error_415_page),
     STRING(http_error_416_page),
 #define HTTP_ERROR_LAST_4XX 417
-#define HTTP_ERROR_OFFSET_494                                                  \
+#define HTTP_ERROR_OFFSET_494 \
   (HTTP_ERROR_LAST_4XX - 400 + HTTP_ERROR_OFFSET_4XX)
     STRING(http_error_494_page), /* 494, request header too large */
     STRING(http_error_495_page), /* 495, https certificate error */
@@ -317,8 +318,7 @@ void http_fast_response(int fd, const char *content, size_t len) {
 void http_finalize_request(struct http_request *r, int ret_code) {
   struct buffer *b = &r->header;
   str_t *status_line = get_http_status_line(ret_code);
-  if (!status_line)
-    return;
+  if (!status_line) return;
 
   b->pos = b->last = b->start;
   memcpy(b->start, "HTTP/1.1 ", sizeof("HTTP/1.1 ") - 1);

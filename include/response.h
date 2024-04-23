@@ -39,14 +39,14 @@
 #define HTTP_GATEWAY_TIME_OUT 504
 #define HTTP_INSUFFICIENT_STORAGE 507
 
-#define HTTP_ERROR_HEADER                                                      \
-  "Server: cserv/dev" CRLF "Content-Type: text/html" CRLF                      \
+#define HTTP_ERROR_HEADER                                 \
+  "Server: cserv/dev" CRLF "Content-Type: text/html" CRLF \
   "Connection: Close" CRLF
 
-#define HTTP_INSUFFICIENT_STORAGE_PAGE                                         \
-  "HTTP/1.1 507 Insufficient Storage" CRLF HTTP_ERROR_HEADER CRLF              \
-  "<html>" CRLF "<head><title>507 Insufficient Storage</title></head>" CRLF    \
-  "<body bgcolor=\"white\">" CRLF                                              \
+#define HTTP_INSUFFICIENT_STORAGE_PAGE                                      \
+  "HTTP/1.1 507 Insufficient Storage" CRLF HTTP_ERROR_HEADER CRLF           \
+  "<html>" CRLF "<head><title>507 Insufficient Storage</title></head>" CRLF \
+  "<body bgcolor=\"white\">" CRLF                                           \
   "<center><h1>507 Insufficient Storage</h1></center>" CRLF
 
 void http_fast_response(int fd, const char *content, size_t len);
