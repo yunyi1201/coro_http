@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "conf.h"
 #include "env.h"
 #include "process.h"
 #include "sched.h"
@@ -29,6 +30,7 @@ int main(int argc, char *argv[]) {
   }
 
   /* start server */
+  load_conf(CONF_FILE);
   conf_env_init();
   tcp_server_init();
 
